@@ -88,6 +88,25 @@ window.addEventListener('load', () => {
         }
     };
 
+    // Perform POST request, calculate and display simulation results
+    const getSimulationResults = async () => {
+        // Extract form data
+        const timeWindow = $('#timeWindow').val();
+        const coneTimeMean = $('#coneTimeMeanMins').val();
+        const coneTimeStdDevMins = $('#coneTimeStdDevMins').val();
+        // Send post data to Express(proxy) server
+        try {
+            const response = await api.post('/simulate', { timeWindow, coneTimeMean, coneTimeStdDevMins });
+            const { rate } = response.data;
+            const result = rate;
+            $('#result2').html(`${timeWindow} ${result}`);
+        } catch (error) {
+            showError(error);
+        } finally {
+            $('#result-segment2').removeClass('loading');
+        }
+    };
+
     // Handle Convert Button Click Event
     const convertRatesHandler = () => {
         if ($('.ui.form').form('is valid')) {
@@ -96,6 +115,7 @@ window.addEventListener('load', () => {
             // Post to Express server
             $('#result-segment').addClass('loading');
             getConversionResults();
+            getSimulationResults();
             // Prevent page from submitting to server
             return false;
         }

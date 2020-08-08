@@ -3,13 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser'); // middleware to help Express read properties from request object
 const { getRates, getSymbols, } = require('./lib/fixer-service');
 const { convertCurrency } = require('./lib/free-currency-service');
-const simulation = require('./lib/simulation');
-const {
-    timeWindow_i,
-    calculateConeTime_i,
-    calcTimeBetweenCustomers_i,
-    simulationRuns_i,
-} = require('./lib/consts');
+const simulationNormal = require('./lib/simulation-normal');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -77,6 +71,18 @@ app.post('/api/convert', async (req, res) => {
     }
 });
 
+// Run Simulation
+app.post('/api/simulate', async (req, res) => {
+    try {
+        const { timeWindow, coneTimeMean, coneTimeStdDevMins } = req.body;
+        const data = await simulationNormal(timeWindow, coneTimeMean, coneTimeStdDevMins, 7, 1001);
+        res.setHeader('Content-Type', 'application/json');
+        res.send(data);
+    } catch (error) {
+        errorHandler(error, req, res);
+    }
+});
+
 // Redirect all traffic to index.html
 app.use((req, res) => res.sendFile(`${__dirname}/public/index.html`));
 
@@ -103,13 +109,14 @@ const test3 = async () => {
     console.log(data);
 }
 
-// Test Currency Conversion Endpoint
+// Test Simulation Endpoint
 const test4 = async () => {
-    const data = await simulation(
-        timeWindow_i,
-        simulationRuns_i,
-        calculateConeTime_i,
-        calcTimeBetweenCustomers_i,
+    const data = await simulationNormal(
+        7, // timeWindowHrs,
+        7, // coneTimeMeanMins,
+        1, // coneTimeStdDevMins,
+        7, // custArrivalMeanMins,
+        1001, // simRuns,
     );
     console.log(data);
 }
