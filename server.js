@@ -3,6 +3,13 @@ const express = require('express');
 const bodyParser = require('body-parser'); // middleware to help Express read properties from request object
 const { getRates, getSymbols, } = require('./lib/fixer-service');
 const { convertCurrency } = require('./lib/free-currency-service');
+const simulation = require('./lib/simulation');
+const {
+    timeWindow_i,
+    calculateConeTime_i,
+    calcTimeBetweenCustomers_i,
+    simulationRuns_i,
+} = require('./lib/consts');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -96,6 +103,18 @@ const test3 = async () => {
     console.log(data);
 }
 
-test1();
-test2();
-test3();
+// Test Currency Conversion Endpoint
+const test4 = async () => {
+    const data = await simulation(
+        timeWindow_i,
+        simulationRuns_i,
+        calculateConeTime_i,
+        calcTimeBetweenCustomers_i,
+    );
+    console.log(data);
+}
+
+// test1();
+// test2();
+// test3();
+test4();
