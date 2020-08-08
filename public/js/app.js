@@ -23,9 +23,45 @@ window.addEventListener('load', () => {
         },
     });
 
-    router.add('/', () => {
+    // router.add('/', () => {
+    //     let html = ratesTemplate();
+    //     el.html(html);
+    // });
+
+    // Instantiate api handler (api client for communicating with proxy server)
+    const api = axios.create({
+        baseURL: 'http://localhost:3000/api',
+        timeout: 5000,
+    });
+
+    // Display Error Banner (if server-side failure)
+    const showError = (error) => {
+        const { title, message } = error.response.data;
+        const html = errorTemplate({ color: 'red', title, message });
+        el.html(html);
+    };
+
+    // Display Latest Currency Rates
+    //
+    // Get rates data from the localhost:3000/api/rates endpoint 
+    // and pass it to the rates-template to display the information.
+    router.add('/', async () => {
+        // Display loader first
         let html = ratesTemplate();
         el.html(html);
+        try {
+            // Load Currency Rates
+            const response = await api.get('/rates');
+            const { base, date, rates } = response.data;
+            // Display Rates Table
+            html = ratesTemplate({ base, date, rates });
+            el.html(html);
+        } catch (error) {
+            showError(error);
+        } finally {
+            // Remove loader status
+            $('.loading').removeClass('loading');
+        }
     });
 
     router.add('/exchange', () => {
