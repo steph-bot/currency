@@ -74,8 +74,20 @@ app.post('/api/convert', async (req, res) => {
 // Run Simulation
 app.post('/api/simulate', async (req, res) => {
     try {
-        const { timeWindow, coneTimeMean, coneTimeStdDevMins } = req.body;
-        const data = await simulationNormal(timeWindow, coneTimeMean, coneTimeStdDevMins, 7, 1001);
+        const { 
+            timeWindow,
+            coneTimeMean,
+            coneTimeStdDevMins,
+            custArrivalMeanMins,
+            simRuns
+        } = req.body;
+        const data = await simulationNormal(
+            timeWindow,
+            coneTimeMean,
+            coneTimeStdDevMins,
+            custArrivalMeanMins,
+            simRuns
+        );
         res.setHeader('Content-Type', 'application/json');
         res.send(data);
     } catch (error) {

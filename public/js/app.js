@@ -94,12 +94,22 @@ window.addEventListener('load', () => {
         const timeWindow = $('#timeWindow').val();
         const coneTimeMean = $('#coneTimeMeanMins').val();
         const coneTimeStdDevMins = $('#coneTimeStdDevMins').val();
+        const custArrivalMeanMins = $('#custArrivalMeanMins').val();
+        const simRuns = $('#simRuns').val();
+
         // Send post data to Express(proxy) server
         try {
-            const response = await api.post('/simulate', { timeWindow, coneTimeMean, coneTimeStdDevMins });
-            const { rate } = response.data;
-            const result = rate;
-            $('#result2').html(`${timeWindow} ${result}`);
+            const response = await api.post('/simulate', { 
+                timeWindow, 
+                coneTimeMean, 
+                coneTimeStdDevMins, 
+                custArrivalMeanMins, 
+                simRuns 
+            });
+            console.log(response);
+            const { meanWaitTimeForVIP } = response.data;
+            const result = meanWaitTimeForVIP;
+            $('#result2').html(`${result}`);
         } catch (error) {
             showError(error);
         } finally {
