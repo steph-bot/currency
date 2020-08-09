@@ -3,7 +3,7 @@ window.addEventListener('load', () => {
 
     // Compile Handlebar Templates
     const errorTemplate = Handlebars.compile($('#error-template').html());
-    const exchangeTemplate = Handlebars.compile($('#exchange-template').html());
+    const simulationTemplate = Handlebars.compile($('#simulation-template').html());
 
     // Router Declaration
     const router = new Router({
@@ -24,14 +24,14 @@ window.addEventListener('load', () => {
         timeout: 0, // Do not time out requests.
     });
 
-    // Display Error Banner (if server-side failure)
+    // Display Error Banner (Server-Side Failure)
     const showError = (error) => {
         const { title, message } = error.response.data;
         const html = errorTemplate({ color: 'red', title, message });
         el.html(html);
     };
 
-    // Perform POST request, calculate and display simulation results
+    // Perform POST Request: Calculate and Display Simulation Results
     const getSimulationResults = async () => {
         // Extract form data
         const timeWindow = $('#timeWindow').val();
@@ -56,17 +56,17 @@ window.addEventListener('load', () => {
         } catch (error) {
             showError(error);
         } finally {
-            $('#result-segment').removeClass('loading');
+            $('#result-segment2').removeClass('loading');
         }
     };
 
-    // Handle Convert Button Click Event
-    const convertRatesHandler = () => {
+    // Handle "Run Simulation" Button Click Event
+    const simulationHandler = () => {
         if ($('.ui.form').form('is valid')) {
             // hide error message
             $('.ui.error.message').hide();
             // Post to Express server
-            $('#result-segment').addClass('loading');
+            $('#result-segment2').addClass('loading');
             // getConversionResults();
             getSimulationResults();
             // Prevent page from submitting to server
@@ -77,13 +77,13 @@ window.addEventListener('load', () => {
 
     router.add('/', async () => {
         // Display loader first
-        let html = exchangeTemplate();
+        let html = simulationTemplate();
         el.html(html);
         try {
             // Load Symbols
             const response = await api.get('/symbols');
             const { symbols } = response.data;
-            html = exchangeTemplate({ symbols });
+            html = simulationTemplate({ symbols });
             el.html(html);
             $('.loading').removeClass('loading');
             // Validate Form Inputs
@@ -97,7 +97,7 @@ window.addEventListener('load', () => {
                 },
             });
             // Specify Submit Handler
-            $('.submit').click(convertRatesHandler);
+            $('.submit').click(simulationHandler);
         } catch (error) {
             showError(error);
         }
