@@ -89,9 +89,11 @@ window.addEventListener('load', () => {
             // Validate Form Inputs
             $('.ui.form').form({
                 fields: {
-                    // from: 'empty',
-                    // to: 'empty',
-                    // amount: 'decimal',
+                    timeWindow: ['number', 'empty'],
+                    simRuns: ['number', 'empty'],
+                    coneTimeMeanMins: ['number', 'empty'],
+                    coneTimeStdDevMins: ['number', 'empty'],
+                    custArrivalMeanMins: ['number', 'empty']
                 },
             });
             // Specify Submit Handler
