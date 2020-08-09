@@ -31,24 +31,24 @@ window.addEventListener('load', () => {
         el.html(html);
     };
 
-    // Perform POST request, calculate and display conversion results
-    const getConversionResults = async () => {
-        // Extract form data
-        const from = $('#from').val();
-        const to = $('#to').val();
-        const amount = $('#amount').val();
-        // Send post data to Express(proxy) server
-        try {
-            const response = await api.post('/convert', { from, to });
-            const { rate } = response.data;
-            const result = rate * amount;
-            $('#result').html(`Result`);
-        } catch (error) {
-            showError(error);
-        } finally {
-            $('#result-segment').removeClass('loading');
-        }
-    };
+    // // Perform POST request, calculate and display conversion results
+    // const getConversionResults = async () => {
+    //     // Extract form data
+    //     const from = $('#from').val();
+    //     const to = $('#to').val();
+    //     const amount = $('#amount').val();
+    //     // Send post data to Express(proxy) server
+    //     try {
+    //         const response = await api.post('/convert', { from, to });
+    //         const { rate } = response.data;
+    //         const result = rate * amount;
+    //         $('#result').html(`Result`);
+    //     } catch (error) {
+    //         showError(error);
+    //     } finally {
+    //         $('#result-segment').removeClass('loading');
+    //     }
+    // };
 
     // Perform POST request, calculate and display simulation results
     const getSimulationResults = async () => {
@@ -75,7 +75,7 @@ window.addEventListener('load', () => {
         } catch (error) {
             showError(error);
         } finally {
-            $('#result-segment2').removeClass('loading');
+            $('#result-segment').removeClass('loading');
         }
     };
 
@@ -86,7 +86,7 @@ window.addEventListener('load', () => {
             $('.ui.error.message').hide();
             // Post to Express server
             $('#result-segment').addClass('loading');
-            getConversionResults();
+            // getConversionResults();
             getSimulationResults();
             // Prevent page from submitting to server
             return false;
@@ -108,9 +108,9 @@ window.addEventListener('load', () => {
             // Validate Form Inputs
             $('.ui.form').form({
                 fields: {
-                    from: 'empty',
-                    to: 'empty',
-                    amount: 'decimal',
+                    // from: 'empty',
+                    // to: 'empty',
+                    // amount: 'decimal',
                 },
             });
             // Specify Submit Handler
