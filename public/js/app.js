@@ -21,7 +21,7 @@ window.addEventListener('load', () => {
     // Instantiate api handler (api client for communicating with proxy server)
     const api = axios.create({
         baseURL: 'http://localhost:3000/api',
-        timeout: 5000,
+        timeout: 0, // Do not time out requests.
     });
 
     // Display Error Banner (if server-side failure)
@@ -30,25 +30,6 @@ window.addEventListener('load', () => {
         const html = errorTemplate({ color: 'red', title, message });
         el.html(html);
     };
-
-    // // Perform POST request, calculate and display conversion results
-    // const getConversionResults = async () => {
-    //     // Extract form data
-    //     const from = $('#from').val();
-    //     const to = $('#to').val();
-    //     const amount = $('#amount').val();
-    //     // Send post data to Express(proxy) server
-    //     try {
-    //         const response = await api.post('/convert', { from, to });
-    //         const { rate } = response.data;
-    //         const result = rate * amount;
-    //         $('#result').html(`Result`);
-    //     } catch (error) {
-    //         showError(error);
-    //     } finally {
-    //         $('#result-segment').removeClass('loading');
-    //     }
-    // };
 
     // Perform POST request, calculate and display simulation results
     const getSimulationResults = async () => {
