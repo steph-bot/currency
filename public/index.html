@@ -5,6 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Bootstrap CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+      integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous" />
+    
+      <!-- Semantic UI -->
     <link rel="stylesheet" href="scripts/semantic-ui-css/semantic.min.css">
     <title>ice cream stand</title>
 </head>
@@ -12,7 +17,7 @@
 <body>
     <div class="ui container">
         <!-- Navigation Menu -->
-        <div class="ui four item inverted orange menu">
+        <div class="ui four item inverted green menu">
             <div class="header item">
                 ice cream stand
             </div>
@@ -39,27 +44,32 @@
         
         <!-- Simulation Template -->
         <script id="exchange-template" type="text/x-handlebars-template">
-          <h1 class="ui header">Exchange Rate</h1>
           <hr>
           <div class="ui basic loading segment">
             <form class="ui form">
 
                 <h4 class="ui dividing header">
-                  simulated time window
+                  simulation
                 </h4>
-                <div class="five wide field">
-                    <label>(hours)</label>
-                    <input type="number" name="timeWindow" id="timeWindow" placeholder="time window (h)">
+                <div class="two fields">
+                  <div class="five wide field">
+                      <label>time window (hours)</label>
+                      <input type="number" name="timeWindow" id="timeWindow" placeholder="time window (h)">
+                  </div>
+                  <div class="five wide field">
+                    <label>simulation iterations</label>
+                    <input type="number" name="simRuns" id="simRuns" placeholder="simRuns">
+                  </div>
                 </div>
                 <h4 class="ui dividing header">
                   cone making time
                 </h4>
                 <div class="two fields">
-                  <div class="field">
+                  <div class="five wide field">
                       <label>average (minutes)</label>
                       <input type="number" name="coneTimeMeanMins" id="coneTimeMeanMins" placeholder="coneTimeMeanMins">
                   </div>
-                  <div class="field">
+                  <div class="five wide field">
                     <label>standard deviation (minutes)</label>
                     <input type="number" name="coneTimeStdDevMins" id="coneTimeStdDevMins" placeholder="coneTimeStdDevMins">
                   </div>
@@ -67,21 +77,18 @@
                 <h4 class="ui dividing header">
                   customer arrival time
                 </h4>
-                <div class="field">
+                <div class="five wide field">
                   <label>average (minutes)</label>
                   <input type="number" name="custArrivalMeanMins" id="custArrivalMeanMins" placeholder="custArrivalMeanMins">
                 </div>
-                <div class="field">
-                  <label>simRuns</label>
-                  <input type="number" name="simRuns" id="simRuns" placeholder="simRuns">
-                </div>
-              <div class="ui primary submit button">Convert</div>
+                
+              <div class="ui olive submit button">run simulation</div>
               <div class="ui error message"></div>
             </form>
             <br>
             <div id="result-segment" class="ui center aligned segment">
               <h2 id="result" class="ui header">
-                enter values to start simulation
+                result:
               </h2>
             </div>
             <div id="result-segment2" class="ui center aligned segment">
