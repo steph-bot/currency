@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="scripts/semantic-ui-css/semantic.min.css">
-    <title>SPA Demo</title>
+    <title>ice cream stand</title>
 </head>
 
 <body>
@@ -14,18 +14,13 @@
         <!-- Navigation Menu -->
         <div class="ui four item inverted orange menu">
             <div class="header item">
-                <i class="money bill alternate outline icon"></i>
-                Single Page App
+                ice cream stand
             </div>
+
             <a class="item" href="/">
-                Currency Rates
+                simulation
             </a>
-            <a class="item" href="/exchange">
-                Exchange Rates
-            </a>
-            <a class="item" href="/historical">
-                Historical Rates
-            </a>
+
         </div>
 
         <!-- Error Template -->
@@ -39,47 +34,6 @@
                 <div class="sub header">{{message}}</div>
               </div>
             </h2>
-          </div>
-        </script>
-
-        <!-- Currency Rates Template -->
-        <script id="rates-template" type="text/x-handlebars-template">
-          <h1 class="ui header">Currency Rates</h1>
-          <hr>
-          <div class="ui loading basic segment">
-            <div class="ui horizontal list">
-              <div class="item">
-                <i class="calendar alternate outline icon"></i>
-                <div class="content">
-                  <div class="ui sub header">Date</div>
-                  <span>{{date}}</span>
-                </div>
-              </div>
-              <div class="item">
-                <i class="money bill alternate outline icon"></i>
-                <div class="content">
-                  <div class="ui sub header">Base</div>
-                  <span>{{base}}</span>
-                </div>
-              </div>
-            </div>
-        
-            <table class="ui celled striped selectable inverted table">
-              <thead>
-                <tr>
-                  <th>Code</th>
-                  <th>Rate</th>
-                </tr>
-              </thead>
-              <tbody>
-                {{#each rates}}
-                <tr>
-                  <td>{{@key}}</td>
-                  <td>{{this}}</td>
-                </tr>
-                {{/each}}
-              </tbody>
-            </table>
           </div>
         </script>
         
@@ -139,7 +93,7 @@
             <br>
             <div id="result-segment" class="ui center aligned segment">
               <h2 id="result" class="ui header">
-                0.00
+                enter values to start simulation
               </h2>
             </div>
             <div id="result-segment2" class="ui center aligned segment">
@@ -150,12 +104,6 @@
           </div>
         </script>
         
-        <!-- Historical Rates Template -->
-        <script id="historical-template" type="text/x-handlebars-template">
-          <h1 class="ui header">Historical Rates</h1>
-          <hr>
-        </script>
-
         <!-- Application Root -->
         <div id="app"></div>
     </div>

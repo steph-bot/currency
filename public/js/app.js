@@ -3,12 +3,7 @@ window.addEventListener('load', () => {
 
     // Compile Handlebar Templates
     const errorTemplate = Handlebars.compile($('#error-template').html());
-    const ratesTemplate = Handlebars.compile($('#rates-template').html());
     const exchangeTemplate = Handlebars.compile($('#exchange-template').html());
-    const historicalTemplate = Handlebars.compile($('#historical-template').html());
-
-    // const html = ratesTemplate();
-    // el.html(html);
 
     // Router Declaration
     const router = new Router({
@@ -23,11 +18,6 @@ window.addEventListener('load', () => {
         },
     });
 
-    // router.add('/', () => {
-    //     let html = ratesTemplate();
-    //     el.html(html);
-    // });
-
     // Instantiate api handler (api client for communicating with proxy server)
     const api = axios.create({
         baseURL: 'http://localhost:3000/api',
@@ -41,34 +31,6 @@ window.addEventListener('load', () => {
         el.html(html);
     };
 
-    // Display Latest Currency Rates
-    //
-    // Get rates data from the localhost:3000/api/rates endpoint 
-    // and pass it to the rates-template to display the information.
-    router.add('/', async () => {
-        // Display loader first
-        let html = ratesTemplate();
-        el.html(html);
-        try {
-            // Load Currency Rates
-            const response = await api.get('/rates');
-            const { base, date, rates } = response.data;
-            // Display Rates Table
-            html = ratesTemplate({ base, date, rates });
-            el.html(html);
-        } catch (error) {
-            showError(error);
-        } finally {
-            // Remove loader status
-            $('.loading').removeClass('loading');
-        }
-    });
-
-    // router.add('/exchange', () => {
-    //     let html = exchangeTemplate();
-    //     el.html(html);
-    // });
-
     // Perform POST request, calculate and display conversion results
     const getConversionResults = async () => {
         // Extract form data
@@ -80,7 +42,7 @@ window.addEventListener('load', () => {
             const response = await api.post('/convert', { from, to });
             const { rate } = response.data;
             const result = rate * amount;
-            $('#result').html(`${to} ${result}`);
+            $('#result').html(`Result`);
         } catch (error) {
             showError(error);
         } finally {
@@ -132,7 +94,7 @@ window.addEventListener('load', () => {
         return true;
     };
 
-    router.add('/exchange', async () => {
+    router.add('/', async () => {
         // Display loader first
         let html = exchangeTemplate();
         el.html(html);
@@ -156,11 +118,6 @@ window.addEventListener('load', () => {
         } catch (error) {
             showError(error);
         }
-    });
-
-    router.add('/historical', () => {
-        let html = historicalTemplate();
-        el.html(html);
     });
 
     // Navigate app to current url

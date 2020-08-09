@@ -61,6 +61,7 @@ app.get('/api/symbols', async (req, res) => {
 
 // Convert Currency
 app.post('/api/convert', async (req, res) => {
+    req.setTimeout(240000);
     try {
         const { from, to } = req.body;
         const data = await convertCurrency(from, to);
@@ -73,6 +74,7 @@ app.post('/api/convert', async (req, res) => {
 
 // Run Simulation
 app.post('/api/simulate', async (req, res) => {
+    req.setTimeout(240000);
     try {
         const { 
             timeWindow,
@@ -99,9 +101,11 @@ app.post('/api/simulate', async (req, res) => {
 app.use((req, res) => res.sendFile(`${__dirname}/public/index.html`));
 
 // Listen for HTTP requests on port 3000
-app.listen(port, () => {
+var server = app.listen(port, () => {
     console.log('listening on %d', port);
 });
+
+server.setTimeout(240000);
 
 // Test Rates Endpoint
 const test1 = async () => {
