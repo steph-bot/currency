@@ -117,14 +117,15 @@ window.addEventListener('load', () => {
         }
     };
 
-    // Handle Convert Button Click Event
-    const convertRatesHandler = () => {
+    // Handle Simulation Button Click Event
+    const simulationHandler = () => {
         if ($('.ui.form').form('is valid')) {
             // hide error message
             $('.ui.error.message').hide();
             // Post to Express server
-            $('#result-segment').addClass('loading');
-            getConversionResults();
+            // $('#result-segment').addClass('loading');
+            $('#result-segment2').addClass('loading');
+            // getConversionResults();
             getSimulationResults();
             // Prevent page from submitting to server
             return false;
@@ -138,21 +139,26 @@ window.addEventListener('load', () => {
         el.html(html);
         try {
             // Load Symbols
+            /*
             const response = await api.get('/symbols');
             const { symbols } = response.data;
             html = exchangeTemplate({ symbols });
             el.html(html);
+            */
             $('.loading').removeClass('loading');
+            
             // Validate Form Inputs
             $('.ui.form').form({
                 fields: {
-                    from: 'empty',
-                    to: 'empty',
-                    amount: 'decimal',
+                    timeWindow: ['empty', 'number'],
+                    coneTimeMeanMins: ['empty', 'number'],
+                    coneTimeStdDevMins: ['empty', 'number'],
+                    custArrivalMeanMins: ['empty', 'number'],
+                    simRuns: 'integer',
                 },
             });
             // Specify Submit Handler
-            $('.submit').click(convertRatesHandler);
+            $('.submit').click(simulationHandler);
         } catch (error) {
             showError(error);
         }
